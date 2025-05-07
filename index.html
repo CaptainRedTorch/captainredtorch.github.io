@@ -1,10 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" href="indexCSS.css">
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Portfolio</title>
 </head>
 <body>
+    <div class="hbox" style="height:100%; position:fixed">
+        <div id="madeBy" >
+            <div style="font-size:16px">MADE BY</div>
+            <div style="font-size:22px">Hen Ben Dor</div>
+        </div>
 
+        <div class="vbox" style="background:rgba(9, 57, 71, 1); ">
+            <div class="hbox">
+                <img id="logo" src="logoMe.png" alt="logo of Hen">
+                <div class="vbox">
+                    <div id="title">Portfolio</div>
+                    <div id="subtitle">a collection of projects</div>
+                </div>
+            </div>
+            <div class="description-box">
+                <a href="#EasyU" class="description-title">EasyU</a>
+                <div class="description-text">Chrome extension for The Open University students, 200+ users</div>
+            </div>
+            <div class="description-box">
+                <a href="#ChatRoom" class="description-title">Chat room server</a>
+                <div class="description-text">TCP server for multiple clients, for an Advanced Java course</div>
+            </div>
+            <div class="description-box">
+                <a href="#PoopFall" class="description-title">Poop-Fall</a>
+                <div class="description-text">1-Bit Game Jam entry, <br>collaborative project in Unity</div>
+            </div>
+            <div class="description-box">
+                <a href="#WaterMelonGame" class="description-title">Watermelon Game</a>
+                <div class="description-text">Unity project recreating the <br>watermelon game from scratch</div>
+            </div>
+            <div class="description-box">
+                <a href="#CLab" class="description-title">Two-pass assembler</a>
+                <div class="description-text">Two-pass assembler for a limited Assembly language using C</div>
+            </div>
+        </div>
+
+        <div class="vbox" style="margin:50px 0 0 100px">
+
+            <div id="PoopFall">
+                <div style="margin-bottom:10px; font-size: 22px">Poop-fall</div>
+                <img class="screenshot" src="poop-fall.png" alt="poop fall screenshot">
+            </div>
+        </div>
+
+    </div>
 </body>
 </html>
