@@ -194,7 +194,7 @@ function createFooter() {
     const copyrightText = document.createElement('p');
     copyrightText.className = 'footer-copyright';
     const currentYear = new Date().getFullYear();
-    copyrightText.innerHTML = `&copy; ${currentYear} CaptainRedtorch. All rights reserved. <br> Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>.`;
+    copyrightText.innerHTML = `&copy; ${currentYear} Hen Ben Dor. All rights reserved. <br> Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener noreferrer">GitHub Pages</a>.`;
     // Social media links
     const socialLinksContainer = document.createElement('div');
     socialLinksContainer.className = 'footer-social-links';
