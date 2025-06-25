@@ -1,71 +1,18 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <link rel="stylesheet" href="indexCSS.css">
     <meta charset="UTF-8">
-    <title>Portfolio</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hen Ben Dor | Portfolio</title>
+    <meta name="description" content="Hen Ben Dor portfolio">
+    <link rel="stylesheet" href="index.css">
+    <!-- Google Fonts: Inter for primary and secondary text -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="index.css">
 </head>
 <body>
-    <div class="hbox" style="height:100%; width:100%; position:fixed">
-        <div id="madeBy" >
-            <div style="font-size:16px">MADE BY</div>
-            <div style="font-size:22px">Hen Ben Dor</div>
-        </div>
-
-        <div class="vbox" style="background:rgba(9, 57, 71, 1);">
-            <div class="hbox">
-                <img id="logo" src="logoMe.png" alt="logo of Hen">
-                <div class="vbox">
-                    <div id="title">Portfolio</div>
-                    <div id="subtitle">a collection of projects</div>
-                </div>
-            </div>
-            <div class="description-box">
-                <a href="#EasyU" class="description-title">EasyU</a>
-                <div class="description-text">Chrome extension for The Open University students, 200+ users</div>
-            </div>
-            <div class="description-box">
-                <a href="#ChatRoom" class="description-title">Chat room server</a>
-                <div class="description-text">TCP server for multiple clients, for an Advanced Java course</div>
-            </div>
-            <div class="description-box">
-                <a href="#PoopFall" class="description-title">Poop-Fall</a>
-                <div class="description-text">1-Bit Game Jam entry, <br>collaborative project in Unity</div>
-            </div>
-            <div class="description-box">
-                <a href="#WaterMelonGame" class="description-title">Watermelon Game</a>
-                <div class="description-text">Unity project recreating the <br>watermelon game from scratch</div>
-            </div>
-            <div class="description-box">
-                <a href="#CLab" class="description-title">Two-pass assembler</a>
-                <div class="description-text">Two-pass assembler for a limited Assembly language using C</div>
-            </div>
-        </div>
-
-        <div class="vbox" style="padding:0 0 0 130px; width:100%; overflow-y: scroll">
-
-            <div id="EasyU" class="project">
-                <div style="margin-bottom:10px; font-size: 22px">EasyU</div>
-                <a href="https://chromewebstore.google.com/detail/fnngffcjbcgnecomoaedkcagihkldebf?utm_source=portfolio"><img class="screenshot" src="easyu.png" alt="poop fall screenshot"></a>
-            </div>
-            <div id="ChatRoom" class="project">
-                <div style="margin-bottom:10px; font-size: 22px">Chat room server</div>
-                <a href="https://github.com/CaptainRedTorch/Open-University-Course-Work/tree/main/20554%20Advanced%20Java/mmn16"><img class="screenshot" src="chatroom.png" alt="poop fall screenshot"></a>
-            </div>
-            <div id="PoopFall" class="project">
-                <div style="margin-bottom:10px; font-size: 22px">Poop-fall</div>
-                <a href="https://nnuurr3.itch.io/poop-fall"><img class="screenshot" src="poop-fall.png" alt="poop fall screenshot"></a>
-            </div>
-            <div id="WaterMelonGame" class="project">
-                <div style="margin-bottom:10px; font-size: 22px">Watermelon Game</div>
-                <a href="https://github.com/CaptainRedTorch/WaterMelon-game"><img class="screenshot" src="watermelon.png" alt="poop fall screenshot"></a>
-            </div>
-            <div id="CLab" class="project">
-                <div style="margin-bottom:10px; font-size: 22px">Two-pass Assembler</div>
-                <a href="https://github.com/CaptainRedTorch/Open-University-Course-Work/tree/main/20465%20mmn14"><img class="screenshot" src="assembler.png" alt="poop fall screenshot" ></a>
-            </div>
-        </div>
-
-    </div>
+    <!-- Main container for the JavaScript-driven application -->
+    <div id="app"></div>
+    <script type="module" src="index.js"></script>
 </body>
 </html>

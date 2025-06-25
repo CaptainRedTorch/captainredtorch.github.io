@@ -1,0 +1,472 @@
+/* Global Styles */
+:root {
+    /* Color Palette */
+    --primary-bg: #081424; /* Deep dark blue for main background */
+    --secondary-bg: var(--card-bg); /* Header/Footer background, matches cards */
+    --card-bg: #101c44; /* Dark blue for project cards */
+    --accent-color: #ffc964; /* Warm gold/amber for highlights and CTAs */
+    --accent-color-rgb: 255, 201, 100; /* RGB version for rgba() usage */
+    --text-color: #b9c9e7; /* Light slate blue for general text */
+    --heading-color: #eef6ff; /* Brighter light blue for headings */
+    --link-color: var(--accent-color); /* Default link color */
+    --border-color-card: var(--accent-color); /* Accent border for cards, e.g., on image */
+    --border-color: #212a6c; /* Subtle border color for separators */
+    --tag-bg: rgba(255, 229, 100, 0.1); /* Semi-transparent accent for tag background */
+    --tag-text: var(--accent-color); /* Tag text color */
+
+    /* Typography */
+    --font-primary: 'Inter', sans-serif; /* Main font for body text */
+    --font-secondary: 'Inter', sans-serif; /* Font for headings (can be same or different) */
+
+    /* Layout & UI Elements */
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.3); /* Subtle shadow for elements */
+    --shadow-md: 0 5px 15px rgba(0,0,0,0.4); /* More pronounced shadow */
+    --border-radius: 12px; /* Consistent border radius for cards, buttons */
+    --content-max-width: 1150px; /* Maximum width for centered content */
+
+    /* Project Card specific variables for dynamic height animation */
+    --card-height: 520px; /* Fixed height for each project card */
+    --card-image-flex-basis-default: 65%; /* Image part default height percentage */
+    --card-image-flex-basis-hover: 50%;   /* Image part hover height percentage */
+    --card-description-max-height-hover: 12em; /* Max height for description when revealed */
+    --card-content-padding: 1.25rem; /* Padding inside the card's content area */
+}
+
+/* Basic Reset and Global Settings */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: var(--font-primary);
+    background-color: var(--primary-bg);
+    color: var(--text-color);
+    line-height: 1.7; /* Improved readability for text blocks */
+    display: flex;
+    flex-direction: column; /* Allows footer to stick to bottom if content is short */
+    min-height: 100vh;
+    font-size: 16px; /* Base font size */
+}
+
+#app {
+    flex-grow: 1; /* Ensures app container takes up available vertical space */
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+h1, h2, h3 {
+    font-family: var(--font-secondary);
+    color: var(--heading-color);
+    margin-bottom: 0.75em;
+    font-weight: 400;
+}
+
+h1.portfolio-main-title {
+    color: var(--heading-color);
+    margin-bottom: 0.1em;
+    font-size: 1.8rem;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+    transition: color 0.2s ease, opacity 0.2s ease, background-color 0.2s ease, padding 0.2s ease;
+}
+
+a:hover, a:focus {
+    color: var(--accent-color);
+    opacity: 0.95; /* Slight fade for hover effect on links */
+    text-decoration: none; /* Keep links clean */
+    outline: none; /* Custom focus styles preferred */
+}
+
+img {
+    max-width: 100%; /* Responsive images */
+    height: auto;    /* Maintain aspect ratio */
+    display: block;  /* Removes extra space below inline images */
+}
+
+/* Header Styles */
+.portfolio-header {
+    background-color: var(--secondary-bg); /* Matches card background */
+    padding: 0.8rem 5%; /* Vertical and horizontal padding */
+    border-bottom: 1px solid var(--border-color);
+    box-shadow: var(--shadow-sm);
+    position: sticky; /* Sticky header for easy navigation */
+    top: 0;
+    z-index: 1000; /* Ensures header stays above other content */
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-between; /* Pushes left (icon/title) and right (nav) apart */
+    align-items: center;
+    max-width: var(--content-max-width); /* Constrains header content width */
+    margin: 0 auto; /* Centers content */
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem; /* Space between icon and title group */
+}
+
+.header-icon {
+    width: 65px;
+    height: 65px;
+
+}
+
+.title-subtitle-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.portfolio-subtitle {
+    font-size: 1.0rem;
+    color: var(--text-color);
+    line-height: 1.0;
+    white-space: pre-line; /* Allows line breaks in subtitle if any */
+    opacity: 0.8; /* Subtle subtitle */
+}
+
+.header-nav a {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--heading-color);
+    padding: 0.4em 0.2em;
+    border-radius: var(--border-radius);
+    background-color: transparent;
+    border: 1px solid transparent; /* Reserve space for potential focus border */
+}
+
+.header-nav a:hover, .header-nav a:focus {
+    color: var(--accent-color); /* Simple color change on hover/focus */
+    background-color: transparent;
+    padding: 0.4em 0.2em; /* Keep padding consistent */
+    opacity: 1; /* Ensure full opacity */
+}
+
+/* Main Content & Projects Section Styles */
+.projects-section {
+    padding: 2.5rem 5%; /* Padding around the projects grid */
+    flex-grow: 1; /* Takes up available space if content is short */
+}
+
+.projects-grid {
+    display: grid;
+    grid-template-columns: 1fr; /* Single column by default for mobile */
+    gap: 1.8rem; /* Space between project cards */
+    max-width: var(--content-max-width); /* Constrains grid width */
+    margin: 0 auto; /* Centers grid */
+    perspective: 1000px; /* For potential 3D transforms to improve animation performance */
+}
+
+/* Project Card Styles */
+.project-card {
+    background-color: var(--card-bg);
+    border-radius: var(--border-radius);
+    overflow: hidden; /* Clips content during animations, e.g., image zoom */
+    display: flex; /* Key for internal layout of image and content parts */
+    flex-direction: column; /* Stacks image and content vertically */
+    height: var(--card-height); /* Fixed height for consistent card size */
+    box-shadow: var(--shadow-sm); /* Default subtle shadow */
+    transition: transform 0.25s ease, box-shadow 0.25s ease; /* Smooth transitions for hover effects */
+    /* Performance hints for animations */
+    will-change: transform, box-shadow; 
+    backface-visibility: hidden; 
+}
+
+/* Hover/Focus/Mobile-Focus state for the entire card */
+.project-card:hover,
+.project-card:focus-within, /* Catches focus on interactive children */
+.project-card.is-mobile-focused { /* Class for touch device "hover" simulation */
+    transform: translateY(-5px); /* Slight lift effect */
+    /* Accent border via box-shadow (avoids layout shift) and enhanced shadow */
+    box-shadow: 0 0 0 1px var(--accent-color), 0 8px 25px rgba(0,0,0,0.5); 
+}
+
+/* Image part of the card */
+.project-image-link {
+    display: block; /* Behaves like a block element */
+    overflow: hidden; /* Clips the image if it scales */
+    flex-basis: var(--card-image-flex-basis-default); /* Initial height percentage */
+    flex-shrink: 0; /* Prevent shrinking beyond flex-basis if content is too large */
+    transition: flex-basis 0.35s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth transition for height change */
+}
+.project-image-link:focus {
+    outline: none; /* Custom focus styles handled by card hover */
+}
+
+/* Image part height adjustment on card hover/focus */
+.project-card:hover .project-image-link,
+.project-card:focus-within .project-image-link,
+.project-card.is-mobile-focused .project-image-link {
+    flex-basis: var(--card-image-flex-basis-hover); /* Reduced height percentage on hover */
+}
+
+.project-image {
+    width: 100%;
+    height: 100%; /* Fills the .project-image-link container */
+    object-fit: cover; /* Ensures image covers area, cropping if necessary */
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1); /* Smooth zoom effect */
+}
+
+/* Image zoom effect on card hover/focus */
+.project-card:hover .project-image,
+.project-card:focus-within .project-image,
+.project-card.is-mobile-focused .project-image {
+    transform: scale(1.03); /* Slight zoom on image */
+}
+
+/* Content part of the card (title, description, tags, button) */
+.project-content {
+    padding: var(--card-content-padding);
+    display: flex;
+    flex-direction: column; /* Stacks title, description wrapper, actions wrapper */
+    flex-grow: 1; /* Takes up remaining vertical space from the image part */
+    background-color: var(--card-bg); 
+    border-top: 2px solid var(--accent-color); /* Accent line separating image and content */
+    overflow: hidden; /* Necessary for description animation */
+}
+
+.project-title {
+    font-size: 1.3rem;
+    color: var(--heading-color);
+    margin-bottom: 0.6rem;
+    flex-shrink: 0; /* Prevents title from shrinking if content is tight */
+}
+
+/* Wrapper for description, facilitates flex layout and animation */
+.description-wrapper {
+    flex-grow: 1; /* Takes up available space between title and actions */
+    overflow: hidden; /* Crucial for max-height animation of description */
+    display: flex; 
+    flex-direction: column; 
+}
+
+.project-description {
+    font-size: 0.9rem;
+    color: var(--text-color);
+    /* Initially hidden and takes no space */
+    opacity: 0; 
+    max-height: 0; 
+    margin-bottom: 0; 
+    visibility: hidden; 
+    /* Transition for appearing, with a slight delay */
+    transition: opacity 0.3s ease 0.1s, max-height 0.3s ease 0.1s, margin-bottom 0.3s ease 0.1s, visibility 0s linear 0.4s; 
+}
+
+/* Description reveal on card hover/focus */
+.project-card:hover .project-description,
+.project-card:focus-within .project-description,
+.project-card.is-mobile-focused .project-description {
+    opacity: 0.95; /* Slightly transparent for a softer look */
+    max-height: var(--card-description-max-height-hover);  /* Expands to reveal text */
+    margin-bottom: 1rem; /* Space below description when visible */
+    visibility: visible; 
+    /* Transition for appearing, timing matches disappearance */
+    transition: opacity 0.3s ease 0.1s, max-height 0.3s ease 0.1s, margin-bottom 0.3s ease 0.1s, visibility 0s linear 0.1s;
+}
+
+/* Wrapper for tags and link button, for bottom anchoring */
+.actions-wrapper {
+    flex-shrink: 0; /* Prevents this section from shrinking */
+    margin-top: auto; /* Pushes tags and button to the bottom of .project-content */
+}
+
+.project-tags {
+    margin-bottom: 1rem; /* Spacing between tags and the "View Project" button */
+    display: flex;
+    flex-wrap: wrap; /* Allows tags to wrap to next line if many */
+    gap: 0.4rem; /* Space between individual tags */
+}
+
+.tag {
+    background-color: var(--tag-bg);
+    color: var(--tag-text);
+    padding: 0.25em 0.6em;
+    border-radius: 4px; /* Slightly rounded tags */
+    font-size: 0.75rem;
+    font-weight: 600;
+    border: 1px solid var(--accent-color); /* Matches background accent */
+}
+
+.project-link { /* "View Project" button */
+    display: inline-block; /* Allows padding and other block-like properties */
+    background-color: transparent; /* Initially transparent */
+    color: var(--accent-color);
+    padding: 0.6em 1.2em;
+    border-radius: var(--border-radius);
+    border: 1px solid var(--accent-color); /* Accent color border */
+    text-align: center;
+    font-weight: bold;
+    font-size: 0.85rem;
+    align-self: flex-start; /* Aligns button to the start (left) if container is wider */
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+.project-link:hover, 
+.project-link:focus {
+    background-color: var(--accent-color); /* Fills with accent color on hover */
+    color: var(--primary-bg); /* Text color contrasts with accent bg */
+    transform: translateY(-2px); /* Slight lift for button */
+    opacity: 1; /* Ensure full opacity */
+    outline: none; /* Custom focus style */
+}
+
+/* Footer Styles */
+.portfolio-footer {
+    background-color: var(--secondary-bg); /* Matches header and card background */
+    color: var(--text-color);
+    padding: 1.5rem 5%; /* Padding for footer */
+    border-top: 1px solid var(--border-color);
+    font-size: 0.85rem; /* Smaller text for footer */
+}
+
+.footer-inner-container {
+    display: flex;
+    justify-content: space-between; /* Copyright left, social links right */
+    align-items: center;
+    flex-wrap: wrap; /* Allows items to wrap on smaller screens */
+    gap: 1rem; /* Space between copyright and social links if they wrap */
+    max-width: var(--content-max-width); /* Constrains footer content width */
+    margin: 0 auto; /* Centers content */
+    width: 100%;
+}
+
+.footer-copyright {
+    margin: 0;
+    opacity: 0.8;
+    text-align: left; /* Default alignment */
+    flex-grow: 1; /* Allows copyright to take available space */
+}
+
+.footer-copyright a {
+    font-weight: bold;
+    color: var(--heading-color); /* Brighter link for GitHub Pages attribution */
+}
+.footer-copyright a:hover {
+    color: var(--accent-color);
+}
+
+.footer-social-links {
+    display: flex;
+    justify-content: flex-end; /* Aligns social links to the right */
+    align-items: center;
+    gap: 1rem; /* Space between social media links */
+    flex-wrap: wrap; /* Allows links to wrap */
+}
+
+.footer-social-links a {
+    font-weight: 500;
+    color: var(--text-color);
+    display: flex; /* Aligns icon and text */
+    align-items: center;
+    gap: 0.4rem; /* Space between icon and text */
+}
+
+.footer-social-links a:hover,
+.footer-social-links a:focus {
+    color: var(--accent-color);
+    opacity: 1;
+}
+
+.footer-social-icon {
+    width: 20px;
+    height: 20px;
+    /* Initial subtle filter for icons, removed on hover */
+    filter: grayscale(100%) brightness(150%) contrast(10%); 
+    transition: filter 0.2s ease;
+}
+.footer-social-links a:hover .footer-social-icon,
+.footer-social-links a:focus .footer-social-icon {
+    filter: none; /* Show full color icon on hover/focus */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 767px) { /* Styles for mobile devices */
+    .header-icon {
+        display: none; /* Hide main icon on small screens to save space */
+    }
+    .title-subtitle-container {
+        align-items: flex-start; /* Ensure title/subtitle align left */
+        text-align: left;
+    }
+    h1.portfolio-main-title {
+        font-size: 1.4rem; /* Slightly smaller title */
+    }
+    .portfolio-subtitle {
+        font-size: 0.8rem; /* Slightly smaller subtitle */
+    }
+    
+    /* Reduce card height slightly on smaller screens if content feels too tight */
+    :root {
+        --card-height: 500px;
+    }
+    .project-title {
+        font-size: 1.15rem; /* Smaller project titles */
+    }
+    .project-description {
+        font-size: 0.85rem; /* Smaller project descriptions */
+    }
+    .tag {
+        font-size: 0.7rem; /* Smaller tags */
+    }
+
+    /* Footer adjustments for mobile */
+    .footer-inner-container {
+        flex-direction: column; /* Stack copyright and social links */
+        align-items: center;
+        text-align: center;
+    }
+    .footer-copyright {
+        text-align: center; /* Center copyright text */
+        margin-bottom: 1rem; /* Space below copyright before social links */
+    }
+    .footer-social-links {
+        justify-content: center; /* Center social links */
+    }
+}
+
+@media (min-width: 768px) { /* Styles for tablets and larger */
+    .projects-grid {
+        grid-template-columns: repeat(2, 1fr); /* Two columns for projects */
+    }
+    h1.portfolio-main-title {
+        font-size: 1.7rem; /* Restore/increase title size */
+    }
+    body {
+        font-size: 16px; /* Ensure base font size is consistent */
+    }
+}
+
+@media (min-width: 1024px) { /* Styles for desktops */
+    .projects-grid {
+        grid-template-columns: repeat(3, 1fr); /* Three columns for projects */
+    }
+     body {
+        font-size: 17px; /* Slightly larger base font for desktops */
+    }
+    h1.portfolio-main-title {
+        font-size: 1.8rem; /* Full title size */
+    }
+}
+
+/* Accessibility Styles */
+.sr-only { /* Screen-reader only class to hide elements visually but keep them accessible */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
