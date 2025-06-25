@@ -1,0 +1,106 @@
+/* Ensure CSS variables from index.css are available or provide fallbacks */
+:root {
+    --primary-bg: #081424;
+    --accent-color: #ffc964;
+    --text-color: #b9c9e7;
+    --border-radius: 12px;
+    --font-primary: 'Inter', sans-serif;
+    --shadow-md: 0 5px 15px rgba(0,0,0,0.4);
+}
+
+/* Styles for game.html */
+body {
+    background-color: var(--primary-bg, #081424);
+    color: var(--text-color, #b9c9e7);
+    font-family: var(--font-primary, 'Inter', sans-serif), sans-serif; /* Fallback included in var or add clean final fallback */
+    margin: 0;
+    /* padding: 0; /* body padding is handled below or by game-page-container */
+    display: flex; /* Changed from block to flex for centering */
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Align content to top, not center of viewport */
+    min-height: 100vh;
+    box-sizing: border-box;
+    padding-top: 20px; /* Added top padding */
+    padding-left: 10px; /* Add some minimal side padding to body */
+    padding-right: 10px;
+}
+
+.game-page-container {
+    /* Background and color are inherited from body or set by Unity container */
+    font-family: var(--font-primary, 'Inter', sans-serif), sans-serif;
+    display: flex;
+    flex-direction: column; /* Changed from row to column to stack link and game */
+    align-items: center;
+    /* justify-content: center; /* Not strictly necessary as children will define their own size/centering */
+    width: 100%;
+    max-width: 1000px; /* Max width for the game area and link */
+    padding: 20px; /* Padding within the container */
+    box-sizing: border-box;
+}
+
+.back-link {
+    display: inline-block;
+    color: var(--accent-color, #ffc964);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.5em 1em;
+    margin-bottom: 25px; /* Increased space */
+    border: 1px solid var(--accent-color, #ffc964);
+    border-radius: var(--border-radius, 12px);
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.back-link:hover, .back-link:focus {
+    background-color: var(--accent-color, #ffc964);
+    color: var(--primary-bg, #081424);
+    opacity: 1;
+    outline: none;
+}
+
+/* Unity Container Styling */
+#unity-container {
+    width: 580px; /* Default for wider screens */
+    height: 750px; /* Default for wider screens - tall aspect ratio */
+    margin: 0 auto; /* Centers the container if .game-page-container is wider */
+    box-shadow: var(--shadow-md, 0 5px 15px rgba(0,0,0,0.4));
+    border-radius: var(--border-radius, 12px);
+    overflow: hidden;
+    background: #000; /* Ensure container has a dark background if canvas is slow */
+}
+
+#unity-canvas {
+    width: 100%;
+    height: 100%;
+    background: #231F20; /* Default Unity canvas background */
+    border-radius: inherit;
+}
+
+/* Responsive adjustments for the game container */
+@media (max-width: 1000px) { /* Tablets and smaller */
+    #unity-container {
+        width: 70vw;
+        max-width: 500px; /* Cap width for portrait game */
+        height: calc(min(70vw, 500px) * 4 / 3); /* 3:4 aspect ratio, respects max-width */
+        max-height: 80vh;
+    }
+}
+
+@media (max-width: 600px) { /* Mobile phones */
+    .game-page-container {
+        padding: 10px; /* Reduce padding on small screens */
+    }
+    #unity-container {
+        width: 90vw;
+        max-width: 375px; /* Adjusted for a slightly narrower feel on typical phones */
+        /* Calculate height based on the actual width (considering max-width) for 9:16 */
+        height: calc(min(90vw, 375px) * 16 / 9);
+        max-height: 85vh; /* Ensure it fits vertically */
+    }
+    .back-link {
+        font-size: 0.9rem;
+        padding: 0.4em 0.8em;
+        margin-bottom: 15px; /* Reduce margin */
+    }
+}

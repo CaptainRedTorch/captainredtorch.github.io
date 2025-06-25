@@ -6,7 +6,7 @@ const projects = [
         id: 'proj-easyu',
         title: 'EasyU - Extension',
         description: 'Chrome extention for The Open University students, with 250+ users.',
-        imageUrl: 'easyucompact.png',
+        imageUrl: 'proj-img/easyucompact.png',
         projectUrl: 'https://chromewebstore.google.com/detail/fnngffcjbcgnecomoaedkcagihkldebf?utm_source=portfolio',
         tags: ['Javascript', 'Web Scraping', 'Chrome API']
     },
@@ -14,7 +14,7 @@ const projects = [
         id: 'proj-chessvision',
         title: 'Chessvision',
         description: 'Computer Vision and AI powered real-time Chess analyzer.',
-        imageUrl: 'chessvision.png',
+        imageUrl: 'proj-img/chessvision.png',
         projectUrl: 'https://github.com/captainredtorch/',
         tags: ['Python', 'AI/ML', 'Computer Vision','OpenCV']
     },
@@ -22,7 +22,7 @@ const projects = [
         id: 'proj-chatserver',
         title: 'Chat Server',
         description: 'Multi-threaded Java server using TCP/IP sockets to manage multi-client chat room, developed for an Advanced Java course.',
-        imageUrl: 'chatroom.png',
+        imageUrl: 'proj-img/chatroom.png',
         projectUrl: 'https://github.com/CaptainRedTorch/Open-University-Course-Work/tree/main/20554%20Advanced%20Java/mmn16',
         tags: ['Java', 'Multithreading', 'TCP/IP','OOP']
     },
@@ -30,7 +30,7 @@ const projects = [
         id: 'proj-assembler',
         title: 'Two-Pass Assembler',
         description: 'Two-Pass Assembler developed in C for a custom instruction set, developed for C-Lab course.',
-        imageUrl: 'assemblercompact.png',
+        imageUrl: 'proj-img/assemblercompact.png',
         projectUrl: 'https://github.com/CaptainRedTorch/Open-University-Course-Work/tree/main/20465%20mmn14',
         tags: ['C-Programming', 'Low-Level']
     },
@@ -38,15 +38,15 @@ const projects = [
         id: 'proj-watermelon',
         title: 'Watermelon Game',
         description: 'Unity project recreating the watermelon game from scratch.',
-        imageUrl: 'watermelon.png',
-        projectUrl: 'https://github.com/CaptainRedTorch/WaterMelon-game',
+        imageUrl: 'proj-img/watermelon.png',
+        projectUrl: 'watermelon_game/game.html',
         tags: ['C#', 'Unity', 'GameDev']
     },
     {
         id: 'proj-gamejam',
         title: 'Poop-Fall',
         description: 'Web browser supported game co-developed during a 2 week game jam, using Unity.',
-        imageUrl: 'poop-fall.png',
+        imageUrl: 'proj-img/poop-fall.png',
         projectUrl: 'https://nnuurr3.itch.io/poop-fall',
         tags: ['C#', 'Unity', 'Team work']
     }
@@ -79,7 +79,7 @@ function createHeader() {
     mainTitle.textContent = "Hen Ben Dor";
     const subtitleText = document.createElement('p');
     subtitleText.className = 'portfolio-subtitle';
-    subtitleText.textContent = "a collection of projects";
+    subtitleText.textContent = "";
     titleSubtitleContainer.appendChild(mainTitle);
     titleSubtitleContainer.appendChild(subtitleText);
     leftSection.appendChild(iconLink);
@@ -108,6 +108,7 @@ function createProjectCard(project) {
     // ARIA attributes link the card to its title and description for accessibility.
     card.setAttribute('aria-labelledby', `${project.id}-title`);
     card.setAttribute('aria-describedby', `${project.id}-desc`);
+
     // Clickable image linking to the project
     const imageLink = document.createElement('a');
     imageLink.href = project.projectUrl;
@@ -115,12 +116,19 @@ function createProjectCard(project) {
     imageLink.rel = 'noopener noreferrer'; // Security best practice for target="_blank"
     imageLink.className = 'project-image-link';
     imageLink.setAttribute('aria-label', `View details for ${project.title}`);
+    const isInternalPageForImage = project.projectUrl.startsWith('./') || project.projectUrl.startsWith('/') || project.projectUrl.startsWith('#');
+    if (!isInternalPageForImage) {
+        imageLink.target = '_blank'; // Open in new tab for external links
+        imageLink.rel = 'noopener noreferrer'; // Security best practice
+    }
+
     const image = document.createElement('img');
     image.src = project.imageUrl;
     image.alt = `${project.title} screenshot`; // Descriptive alt text
     image.className = 'project-image';
     image.loading = 'lazy'; // Lazy load images for better performance
     imageLink.appendChild(image);
+
     // Content section of the card (title, description, tags, link)
     const content = document.createElement('div');
     content.className = 'project-content';
@@ -128,6 +136,7 @@ function createProjectCard(project) {
     title.id = `${project.id}-title`; // ID for ARIA linking
     title.className = 'project-title';
     title.textContent = project.title;
+
     // Wrapper for the description to manage its animation and layout
     const descriptionWrapper = document.createElement('div');
     descriptionWrapper.className = 'description-wrapper';
@@ -136,6 +145,7 @@ function createProjectCard(project) {
     description.className = 'project-description';
     description.textContent = project.description;
     descriptionWrapper.appendChild(description);
+
     // Wrapper for tags and project link button, for bottom anchoring
     const actionsWrapper = document.createElement('div');
     actionsWrapper.className = 'actions-wrapper';
@@ -147,13 +157,20 @@ function createProjectCard(project) {
         tag.textContent = tagText;
         tagsContainer.appendChild(tag);
     });
+
     const linkButton = document.createElement('a');
     linkButton.href = project.projectUrl;
-    linkButton.target = '_blank';
-    linkButton.rel = 'noopener noreferrer';
     linkButton.className = 'project-link';
-    linkButton.textContent = 'View Project';
-    linkButton.setAttribute('aria-label', `View ${project.title} project`);
+
+    const isInternalPageForLink = project.projectUrl.startsWith('./') || project.projectUrl.startsWith('/') || project.projectUrl.startsWith('#');
+    if (!isInternalPageForLink) {
+        linkButton.target = '_blank';
+        linkButton.rel = 'noopener noreferrer';
+    }
+
+    linkButton.textContent = project.projectUrl.startsWith('./game') ? 'Play Demo' : 'View Project';
+    linkButton.setAttribute('aria-label', `${project.projectUrl.startsWith('./game') ? 'Play Demo of' : 'View'} ${project.title}`);
+
     actionsWrapper.appendChild(tagsContainer);
     actionsWrapper.appendChild(linkButton);
     content.appendChild(title);
